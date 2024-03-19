@@ -1,0 +1,27 @@
+# delete_resources.yaml
+
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Stop Apache service
+      service:
+        name: apache2
+        state: stopped
+      ignore_errors: yes  # Ignore errors if Apache service is not running
+
+    - name: Uninstall Apache package
+      apt:
+        name: apache2
+        state: absent
+
+    - name: Delete Apache configuration files
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/apache2/apache2.conf
+        - /etc/apache2/sites-available/000-default.conf
+        # Add more paths for other configuration files as needed
+
+    # Add more tasks to delete other resources as needed
