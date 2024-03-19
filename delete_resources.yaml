@@ -1,27 +1,36 @@
-# delete_resources.yaml
-
 ---
 - hosts: all
   become: yes
   tasks:
-    - name: Stop Apache service
+    # Stop and disable Apache service
+    - name: Stop and disable Apache service
       service:
         name: apache2
         state: stopped
-      ignore_errors: yes  # Ignore errors if Apache service is not running
+        enabled: no
 
-    - name: Uninstall Apache package
+    # Remove Apache configuration directory
+    - name: Remove Apache configuration directory
+      file:
+        path: /etc/apache2
+        state: absent
+
+    # Remove Apache log directory
+    - name: Remove Apache log directory
+      file:
+        path: /var/log/apache2
+        state: absent
+
+    # Remove Apache package
+    - name: Remove Apache package
       apt:
         name: apache2
         state: absent
 
-    - name: Delete Apache configuration files
+    # Remove cloned GitHub repository
+    - name: Remove cloned GitHub repository
       file:
-        path: "{{ item }}"
+        path: /home/ubuntu/ansible
         state: absent
-      loop:
-        - /etc/apache2/apache2.conf
-        - /etc/apache2/sites-available/000-default.conf
-        # Add more paths for other configuration files as needed
 
-    # Add more tasks to delete other resources as needed
+    # Add more tasks here to remove any other resources created by the previous playbooks
