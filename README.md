@@ -1,5 +1,5 @@
 # ansible2
-# ansible
+
 # create master instance with local key > ssh into it> 
 # run ssh-keygen > cat id_rsa.pub >save to git key&ssh > 
 # cat id_rsa.pub save in aws console like KEY IMPORT (under key pair)
