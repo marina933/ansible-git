@@ -23,3 +23,17 @@
 # ansible all -i hosts -m command -a "apache2 -v"
 # ansible all -i hosts -m command -a "which apache2ctl"
 # ansible all -i hosts -m command -a "which apachectl"
+
+
+
+# playbook.yaml will create in each host same files and we have to run to:
+# under etc/apache2> (must be file apache2.conf, if is not here, we can run 
+# sudo apt-get purge apache2
+# sudo apt-get install apache2
+
+# or
+
+# sudo mkdir /etc/apache2
+# sudo touch /etc/apache2/apache2.conf
+# sudo systemctl start apache2
+
