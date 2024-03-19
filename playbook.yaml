@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: yes  # Run tasks with elevated privileges
+
+  tasks:
+    - name: Clone GitHub Repo
+      git:
+        repo: https://github.com/marina933/ansible2.git
+        dest: /home/ubuntu/ansible # Change to your desired destination
+        version: main  # Change to your branch or tag if necessary
+
+    - name: Copy Local File to Hosts
+      copy:
+        src: /home/ubuntu/playbook.yaml  # Change to your local file path
+        dest: /home/ubuntu/ansible/playbook.yaml
+
+    - name: Make File Executable
+      command: chmod +x  /home/ubuntu/ansible
+
+    - name: Change File Name to myfirstplaybook
+      command: mv /home/ubuntu/ansible/playbook.yaml /home/ubuntu/ansible/myplaybook.yaml
