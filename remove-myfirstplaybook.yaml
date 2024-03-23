@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Disable and stop Apache service
+      service:
+        name: apache2
+        state: stopped
+        enabled: no
+
+    - name: Remove Apache2 package
+      apt:
+        name: apache2
+        state: absent
+
+    - name: Remove Apache2 configuration files
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/apache2/ports.conf
+        - /etc/apache2/sites-available/000-default.conf
+
+  handlers:
+    - name: restart apache2
+      service:
+        name: apache2
+        state: restarted
